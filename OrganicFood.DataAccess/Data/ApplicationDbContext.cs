@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace OrganicFoodMVC.Data
+namespace OrganicFoodMVC.DataAccess.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {

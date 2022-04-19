@@ -1,6 +1,6 @@
 using System;
 
-namespace OrganicFoodMVC.Models
+namespace OrganicFoodMVC.ViewModels
 {
     public class ErrorViewModel
     {

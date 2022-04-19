@@ -15,4 +15,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.16" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\OrganicFood.DataAccess\OrganicFoodMVC.DataAccess.csproj" />
+    <ProjectReference Include="..\OrganicFoodMVC.Models\OrganicFoodMVC.Models.csproj" />
+    <ProjectReference Include="..\OrganicFoodMVC.Utility\OrganicFoodMVC.Utility.csproj" />
+  </ItemGroup>
+
 </Project>
