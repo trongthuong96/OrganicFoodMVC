@@ -10,7 +10,7 @@ namespace OrganicFoodMVC.Models
         [Key]
         public int Id { get; set; }
 
-        [Display(Name="Thể Loại")]
+        [Display(Name="Tên Thể Loại")]
         [Required]
         [MaxLength(50)]
         public string Name { get; set; }
