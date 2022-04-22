@@ -11,20 +11,21 @@ function loadDataTable() {
         },
         "pagingType": "simple_numbers",
         "ajax": {
-            "url": "/Admin/Category/GetAll"
+            "url": "/Admin/Brand/GetAll"
         },
         "columns": [
             { "data": "name", "width": "20%" },
-            { "data": "discription", "width": "40%" },
+            { "data": "discription", "width": "20%" },
+            { "data": "logo", "width": "20%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/Admin/Category/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/Admin/Brand/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a onclick=Delete("/Admin/Category/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onclick=Delete("/Admin/Brand/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -41,7 +42,7 @@ function Delete(url) {
         text: "Không thể hồi phục khi xóa.",
         icon: "warning",
         buttons: true,
-        
+
         dangerMode: true,
     }).then((willDelete) => {
         if (willDelete) {

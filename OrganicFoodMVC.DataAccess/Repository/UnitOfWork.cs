@@ -15,11 +15,13 @@ namespace OrganicFoodMVC.DataAccess.Repository
         {
             _db = db;
             Category = new CategoryRepository(_db);
+            Brand = new BrandRepository(_db);
             SP_Call = new SP_Call(_db);
 
         }
 
         public ICategoryRepository Category { get; private set; }
+        public IBrandRepositoty Brand { get; private set; }
         public ISP_Call SP_Call { get; private set; }
 
         public void Dispose()

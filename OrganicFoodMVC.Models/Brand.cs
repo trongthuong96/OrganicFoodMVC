@@ -5,19 +5,23 @@ using System.Text;
 
 namespace OrganicFoodMVC.Models
 {
-    public class Category
+    public class Brand
     {
         [Key]
         public int Id { get; set; }
 
-        [Display(Name="Tên Thể Loại")]
-        [Required(ErrorMessage = "Không được để tên trống")]
+        [Display(Name="Tên Thương Hiệu")]
+        [Required(ErrorMessage ="Điền tên thương hiệu")]
         [MaxLength(50)]
         public string Name { get; set; }
 
         [Display(Name="Mô tả")]
         [MaxLength(5000)]
         public string Discription { get; set; }
+
+        [Required(ErrorMessage ="Thêm logo")]
+        [MaxLength(255)]
+        public string Logo { get; set; }
 
     }
 }
