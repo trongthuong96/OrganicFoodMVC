@@ -23,6 +23,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return View();
         }
 
+        // insert and update
         public IActionResult Upsert(int? id)
         {
             Brand brand = new Brand();
@@ -41,6 +42,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return View(brand);
         }
 
+        // insert and update
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Upsert(Brand brand)
@@ -49,11 +51,11 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             {
                 if(brand.Id == 0)
                 {
-                    _unitOfWork.Brand.Add(brand);
+                    _unitOfWork.Brand.Add(brand); // insert
                 }
                 else
                 {
-                    _unitOfWork.Brand.Update(brand);
+                    _unitOfWork.Brand.Update(brand); // update
                 }
                 _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
@@ -63,6 +65,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
 
         #region API CALLS
 
+        // api get
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -70,6 +73,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return Json(new { data = allObj });
         }
 
+        // api delete
         [HttpDelete]
         public IActionResult Delete(int id)
         {

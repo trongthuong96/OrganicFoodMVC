@@ -6,10 +6,7 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-        "search": {
-            "label": "Fred"
-        },
-        "pagingType": "simple_numbers",
+      
         "ajax": {
             "url": "/Admin/Brand/GetAll"
         },
@@ -32,7 +29,21 @@ function loadDataTable() {
                             `;
                 }, "width": "40%"
             }
-        ]
+        ],
+        dom: 'Plfrtip',
+        language: {
+            "emptyTable": "Không có dữ liệu",
+            "search": "Tìm kiếm:",
+            "paginate": {
+                "first": "Trang đầu",
+                "last": "Trang cuối",
+                "next": "Trang sau",
+                "previous": "Trang trước"
+            },
+            "info": "Hiển thị _START_ đến _END_ sản phẩm / Tổng _TOTAL_ sản phẩm",
+            "infoEmpty": "",
+            "lengthMenu": "Hiện _MENU_ sản phẩm",
+        },
     });
 }
 

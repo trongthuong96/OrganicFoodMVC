@@ -6,27 +6,38 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
+       
         "ajax": {
-            "url": "/Admin/Category/GetAll"
+            "url": "/Admin/Product/GetAll"
         },
         "columns": [
-            { "data": "name", "width": "20%" },
-            { "data": "discription", "width": "40%" },
+            { "data": "name", "width": "12%" },
+            { "data": "discription", "width": "30%" },
+            { "data": "category.name", "width": "12%" },
+            { "data": "brand.name", "width": "12%" },
+            { "data": "quantity", "width": "10%" },
+            { "data": "price", "width": "10%", render: $.fn.dataTable.render.number(',', ',', 0) },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/Admin/Category/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/Admin/Product/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a onclick=Delete("/Admin/Category/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onclick=Delete("/Admin/Product/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
                             `;
-                }, "width": "40%"
-            }
+                }, "width": "10%"
+            },
+        ],
+        fixedColumns: true,
+        columnDefs: [
+            { targets: 0, render: $.fn.dataTable.render.ellipsis() },
+            { targets: 1, render: $.fn.dataTable.render.ellipsis() },
+            { targets: 2, render: $.fn.dataTable.render.ellipsis() },
         ],
         dom: 'Plfrtip',
         language: {
@@ -71,3 +82,18 @@ function Delete(url) {
         }
     });
 }
+
+// hiđen content
+$.fn.dataTable.render.ellipsis = function () {
+    return function (data, type, row) {
+        if (type !== 'display') {
+            return data;
+        }
+
+        if (data.length > 100) {
+            return data.substr(0, 100) + '…';
+        } else {
+            return data;
+        }
+    }
+};

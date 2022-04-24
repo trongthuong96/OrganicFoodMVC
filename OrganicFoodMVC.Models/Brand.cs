@@ -19,7 +19,6 @@ namespace OrganicFoodMVC.Models
         [MaxLength(5000)]
         public string Discription { get; set; }
 
-        [Required(ErrorMessage ="Thêm logo")]
         [MaxLength(255)]
         public string Logo { get; set; }
 

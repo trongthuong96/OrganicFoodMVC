@@ -20,26 +20,31 @@ namespace OrganicFoodMVC.DataAccess.Repository
             this.dbSet = _db.Set<T>();
         }
 
+        // insert
         public void Add(T entity)
         {
             dbSet.Add(entity);
         }
 
+        // find one
         public T Get(int id)
         {
             return dbSet.Find(id);
         }
 
+        // find all
         public IEnumerable<T> GetAll(Expression<Func<T, bool>> filter = null, Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
 
-            if(filter != null)
+            if (filter != null)
             {
                 query = query.Where(filter);
             }
 
-            if(includeProperties != null)
+            //Configures index include properties 
+            // cau hinh chỉ muc
+            if (includeProperties != null)
             {
                 foreach (var includeProp in includeProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
                 {
@@ -47,13 +52,14 @@ namespace OrganicFoodMVC.DataAccess.Repository
                 }
             }
 
-            if(orderBy != null)
+            if (orderBy != null)
             {
                 return orderBy(query).ToList();
             }
             return query.ToList();
         }
 
+        // find first or default
         public T GetFirstOrDefault(Expression<Func<T, bool>> filter = null, string includeProperties = null)
         {
             IQueryable<T> query = dbSet;
@@ -70,9 +76,12 @@ namespace OrganicFoodMVC.DataAccess.Repository
                     query = query.Include(includeProp);
                 }
             }
+
             return query.FirstOrDefault();
         }
 
+
+        // delete one
         public void Remove(int id)
         {
             T entity = dbSet.Find(id);
@@ -84,6 +93,7 @@ namespace OrganicFoodMVC.DataAccess.Repository
             dbSet.Remove(entity);
         }
 
+        // delete list
         public void RemoveRange(IEnumerable<T> entity)
         {
             dbSet.RemoveRange(entity);

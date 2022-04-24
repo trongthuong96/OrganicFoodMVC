@@ -33,4 +33,8 @@
     <ProjectReference Include="..\OrganicFoodMVC.Utility\OrganicFoodMVC.Utility.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>
