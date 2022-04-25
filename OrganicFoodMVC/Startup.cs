@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using OrganicFoodMVC.DataAccess.Data;
 using OrganicFoodMVC.DataAccess.Repository;
 using OrganicFoodMVC.DataAccess.Repository.IRepository;
+using OrganicFoodMVC.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,8 +36,14 @@ namespace OrganicFoodMVC
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            // chagne
+            // services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            // to
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            // add EmailSender
+            services.AddSingleton<IEmailSender, EmailSender>();
 
             //(me) add UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();

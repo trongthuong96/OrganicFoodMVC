@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.32407.337
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganicFoodMVC", "OrganicFoodMVC\OrganicFoodMVC.csproj", "{37C6D070-5288-49CE-998A-3F9C001DA75D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganicFoodMVC.Models", "OrganicFoodMVC.Models\OrganicFoodMVC.Models.csproj", "{F8561789-E5D7-4779-A58F-26DCB8BF46D5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganicFoodMVC.Models", "OrganicFoodMVC.Models\OrganicFoodMVC.Models.csproj", "{F8561789-E5D7-4779-A58F-26DCB8BF46D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganicFoodMVC.Utility", "OrganicFoodMVC.Utility\OrganicFoodMVC.Utility.csproj", "{F9704253-3835-41F1-86BE-43A9C9D6583E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganicFoodMVC.Utility", "OrganicFoodMVC.Utility\OrganicFoodMVC.Utility.csproj", "{F9704253-3835-41F1-86BE-43A9C9D6583E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrganicFoodMVC.DataAccess", "OrganicFoodMVC.DataAccess\OrganicFoodMVC.DataAccess.csproj", "{7CBEE841-6259-4D46-924C-3B59B34682D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrganicFoodMVC.DataAccess", "OrganicFoodMVC.DataAccess\OrganicFoodMVC.DataAccess.csproj", "{7CBEE841-6259-4D46-924C-3B59B34682D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
