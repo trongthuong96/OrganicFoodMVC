@@ -12,6 +12,10 @@ namespace OrganicFoodMVC.DataAccess.Repository.IRepository
 
         IProductRepository Product { get; }
 
+        IUnitRepository Unit { get; }
+
+        ICompanyRepository Company { get; }
+
         ISP_Call SP_Call { get; }
 
         void Save();

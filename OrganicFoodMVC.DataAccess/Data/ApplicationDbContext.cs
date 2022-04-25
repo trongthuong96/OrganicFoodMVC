@@ -19,5 +19,11 @@ namespace OrganicFoodMVC.DataAccess.Data
         public DbSet<Brand> Brands { get; set; }
         
         public DbSet<Product> Products { get; set; }
+
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+
+        public DbSet<Unit> Units { get; set; }
+
+        public DbSet<Company> Companies { get; set; }
     }
 }

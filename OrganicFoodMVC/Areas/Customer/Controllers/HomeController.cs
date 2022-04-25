@@ -25,7 +25,7 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand");
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
             return View(products);
         }
 

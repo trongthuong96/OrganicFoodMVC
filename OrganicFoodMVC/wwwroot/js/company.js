@@ -6,49 +6,45 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-       
         "ajax": {
-            "url": "/Admin/Product/GetAll"
+            "url": "/Admin/Company/GetAll"
         },
         "columns": [
+            { "data": "name", "width": "10%" },
+            { "data": "email", "width": "10%" },
+            { "data": "phoneNumber", "width": "10%" },
+            { "data": "streetAddress", "width": "10%" },
+            { "data": "village", "width": "10%" },
+            { "data": "district", "width": "10%" },
+            { "data": "city", "width": "10%" },
             {
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                },
+                "data": "isAuthorizedCompany",
+                "width": "10%",
+                "render": function (data) {
+                    if (data) {
+                        return `<input type="checkbox" disabled checked />`
+                    }
+                    else {
+                        return `<input type="checkbox" disabled />`
+                    }
+                }
             },
-            { "data": "name", "width": "12%" },
-            { "data": "discription", "width": "30%" },
-            { "data": "category.name", "width": "12%" },
-            { "data": "brand.name", "width": "12%" },
-            { "data": "quantity", "width": "10%" },
-            { "data": "price", "width": "10%", render: $.fn.dataTable.render.number(',', ',', 0) },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/Admin/Product/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/Admin/Company/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a onclick=Delete("/Admin/Product/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onclick=Delete("/Admin/Company/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
                             `;
-                }, "width": "10%"
-            },
+                }, "width": "15%"
+            }
         ],
-        fixedColumns: true,
-        columnDefs: [
-            {
-                "searchable": false,
-                "orderable": false,
-                "targets": 0,
-            },
-            { targets: 1, render: $.fn.dataTable.render.ellipsis() },
-            { targets: 2, render: $.fn.dataTable.render.ellipsis() },
-        ],
-        
         dom: 'Plfrtip',
         language: {
             "emptyTable": "Không có dữ liệu",
@@ -63,7 +59,6 @@ function loadDataTable() {
             "infoEmpty": "",
             "lengthMenu": "Hiện _MENU_ sản phẩm",
         },
-       
     });
 }
 
@@ -93,18 +88,3 @@ function Delete(url) {
         }
     });
 }
-
-// hiđen content
-$.fn.dataTable.render.ellipsis = function () {
-    return function (data, type, row) {
-        if (type !== 'display') {
-            return data;
-        }
-
-        if (data.length > 100) {
-            return data.substr(0, 100) + '…';
-        } else {
-            return data;
-        }
-    }
-};

@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - OrganicFoodMVC</title>
+    <title>@ViewData["Title"] - OrganicFood</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />
@@ -14,7 +14,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-primary border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OrganicFoodMVC</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">OrganicFood</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -29,15 +29,22 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Các loại rau
+                                Quản lý nội dung
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Loại sản phẩm</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Brand" asp-action="Index">Thương hiệu</a>
                                 <a class="dropdown-item" asp-area="Admin" asp-controller="Product" asp-action="Index">Sản phẩm</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Unit" asp-action="Index">Đơn vị tính</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Quản lý người dùng
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Category" asp-action="Index">Tài khoản người dùng</a>
+                                <a class="dropdown-item" asp-area="Admin" asp-controller="Company" asp-action="Index">Nhà bán hàng</a>
                             </div>
                         </li>
                     </ul>
@@ -54,7 +61,7 @@
 
     <footer class="border-top footer text-white-50 bg-primary">
         <div class="container">
-            &copy; 2022 - OrganicFoodMVC
+            &copy; 2022 - OrganicFood
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

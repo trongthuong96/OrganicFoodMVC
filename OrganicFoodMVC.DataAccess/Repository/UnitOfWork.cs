@@ -17,6 +17,8 @@ namespace OrganicFoodMVC.DataAccess.Repository
             Category = new CategoryRepository(_db);
             Brand = new BrandRepository(_db);
             Product = new ProductRepository(_db);
+            Unit = new UnitRepository(_db);
+            Company = new CompanyRepository(_db);
             SP_Call = new SP_Call(_db);
             
 
@@ -25,6 +27,8 @@ namespace OrganicFoodMVC.DataAccess.Repository
         public ICategoryRepository Category { get; private set; }
         public IBrandRepositoty Brand { get; private set; }
         public IProductRepository Product { get; private set; }
+        public IUnitRepository Unit { get; private set; }
+        public ICompanyRepository Company { get; private set; }
         public ISP_Call SP_Call { get; private set; }
 
         // to release occupied resources - when the object is destroyed

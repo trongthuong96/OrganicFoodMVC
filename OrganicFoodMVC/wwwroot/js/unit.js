@@ -6,49 +6,27 @@ $(document).ready(function () {
 
 function loadDataTable() {
     dataTable = $('#tblData').DataTable({
-       
         "ajax": {
-            "url": "/Admin/Product/GetAll"
+            "url": "/Admin/Unit/GetAll"
         },
         "columns": [
-            {
-                "render": function (data, type, full, meta) {
-                    return meta.row + 1;
-                },
-            },
-            { "data": "name", "width": "12%" },
-            { "data": "discription", "width": "30%" },
-            { "data": "category.name", "width": "12%" },
-            { "data": "brand.name", "width": "12%" },
-            { "data": "quantity", "width": "10%" },
-            { "data": "price", "width": "10%", render: $.fn.dataTable.render.number(',', ',', 0) },
+            { "data": "name", "width": "50%" },
             {
                 "data": "id",
                 "render": function (data) {
                     return `
                             <div class="text-center">
-                                <a href="/Admin/Product/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
+                                <a href="/Admin/Unit/Upsert/${data}" class="btn btn-success text-white" style="cursor:pointer">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <a onclick=Delete("/Admin/Product/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
+                                <a onclick=Delete("/Admin/Unit/Delete/${data}") class="btn btn-danger text-white" style="cursor:pointer">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
                             </div>
                             `;
-                }, "width": "10%"
-            },
+                }, "width": "40%"
+            }
         ],
-        fixedColumns: true,
-        columnDefs: [
-            {
-                "searchable": false,
-                "orderable": false,
-                "targets": 0,
-            },
-            { targets: 1, render: $.fn.dataTable.render.ellipsis() },
-            { targets: 2, render: $.fn.dataTable.render.ellipsis() },
-        ],
-        
         dom: 'Plfrtip',
         language: {
             "emptyTable": "Không có dữ liệu",
@@ -63,7 +41,6 @@ function loadDataTable() {
             "infoEmpty": "",
             "lengthMenu": "Hiện _MENU_ sản phẩm",
         },
-       
     });
 }
 
@@ -93,18 +70,3 @@ function Delete(url) {
         }
     });
 }
-
-// hiđen content
-$.fn.dataTable.render.ellipsis = function () {
-    return function (data, type, row) {
-        if (type !== 'display') {
-            return data;
-        }
-
-        if (data.length > 100) {
-            return data.substr(0, 100) + '…';
-        } else {
-            return data;
-        }
-    }
-};

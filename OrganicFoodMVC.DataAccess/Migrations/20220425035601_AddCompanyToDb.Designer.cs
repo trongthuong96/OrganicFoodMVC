@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using OrganicFoodMVC.DataAccess.Data;
 
 namespace OrganicFoodMVC.DataAccess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220425035601_AddCompanyToDb")]
+    partial class AddCompanyToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -376,9 +378,6 @@ namespace OrganicFoodMVC.DataAccess.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("CompanyId")
-                        .HasColumnType("int");
-
                     b.Property<string>("District")
                         .HasColumnType("nvarchar(max)");
 
@@ -391,8 +390,6 @@ namespace OrganicFoodMVC.DataAccess.Migrations
 
                     b.Property<string>("Village")
                         .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("CompanyId");
 
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
@@ -473,15 +470,6 @@ namespace OrganicFoodMVC.DataAccess.Migrations
                     b.Navigation("Category");
 
                     b.Navigation("Unit");
-                });
-
-            modelBuilder.Entity("OrganicFoodMVC.Models.ApplicationUser", b =>
-                {
-                    b.HasOne("OrganicFoodMVC.Models.Company", "Company")
-                        .WithMany()
-                        .HasForeignKey("CompanyId");
-
-                    b.Navigation("Company");
                 });
 #pragma warning restore 612, 618
         }

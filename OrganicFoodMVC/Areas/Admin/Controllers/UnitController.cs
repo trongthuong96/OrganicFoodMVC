@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 namespace OrganicFoodMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    public class CategoryController : Controller
+    public class UnitController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
 
-        public CategoryController(IUnitOfWork unitOfWork)
+        public UnitController(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
         }
@@ -23,66 +23,66 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return View();
         }
 
-        // insert and update
+        // show insert and update
         public IActionResult Upsert(int? id)
         {
-            Category category = new Category();
+            Unit unit = new Unit();
             if (id == null)
             {
                 // this is for create
-                return View(category);
+                return View(unit);
             }
 
             //this is for edit
-            category = _unitOfWork.Category.Get(id.GetValueOrDefault());
-            if (category == null)
+            unit = _unitOfWork.Unit.Get(id.GetValueOrDefault());
+            if (unit == null)
             {
                 return NotFound();
             }
-            return View(category);
+            return View(unit);
         }
 
         // insert and update
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Upsert(Category category)
+        public IActionResult Upsert(Unit unit)
         {
             if (ModelState.IsValid)
             {
-                if (category.Id == 0)
+                if (unit.Id == 0)
                 {
-                    _unitOfWork.Category.Add(category); // insert
+                    _unitOfWork.Unit.Add(unit); // insert
                 }
                 else
                 {
-                    _unitOfWork.Category.Update(category); // update
+                    _unitOfWork.Unit.Update(unit); // update
                 }
                 _unitOfWork.Save();
                 return RedirectToAction(nameof(Index));
             }
-            return View(category);
+            return View(unit);
         }
 
         #region API CALLS
 
-        // api get category
+        // api get unit
         [HttpGet]
         public IActionResult GetAll()
         {
-            var allObj = _unitOfWork.Category.GetAll();
+            var allObj = _unitOfWork.Unit.GetAll();
             return Json(new { data = allObj });
         }
 
-        //api delete category
+        //api delete unit
         [HttpDelete]
         public IActionResult Delete(int id)
         {
-            var objFromDb = _unitOfWork.Category.Get(id);
+            var objFromDb = _unitOfWork.Unit.Get(id);
             if (objFromDb == null)
             {
                 return Json(new { success = false, message = "Xóa thất bại!" });
             }
-            _unitOfWork.Category.Remove(objFromDb);
+            _unitOfWork.Unit.Remove(objFromDb);
             _unitOfWork.Save();
             return Json(new { success = true, message = "Xóa thành công!" });
         }

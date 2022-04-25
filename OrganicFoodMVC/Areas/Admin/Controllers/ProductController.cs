@@ -48,6 +48,11 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
                 {
                     Text = i.Name,
                     Value = i.Id.ToString()
+                }),
+                UnitList = _unitOfWork.Unit.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
                 })
             };
             if (id == null)
@@ -133,6 +138,11 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
                     Text = i.Name,
                     Value = i.Id.ToString()
                 });
+                productVM.UnitList = _unitOfWork.Unit.GetAll().Select(i => new SelectListItem
+                {
+                    Text = i.Name,
+                    Value = i.Id.ToString()
+                });
                 if (productVM.Product.Id != 0)
                 {
                     productVM.Product = _unitOfWork.Product.Get(productVM.Product.Id);
@@ -148,7 +158,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
-            var allObj = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand");
+            var allObj = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
             return Json(new { data = allObj });
         }
 

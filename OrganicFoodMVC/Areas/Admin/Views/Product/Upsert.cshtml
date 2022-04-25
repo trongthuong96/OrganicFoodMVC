@@ -68,9 +68,14 @@
                 <div class="col-4">
                     <label asp-for="Product.Price"></label>
                 </div>
-                <div class="col-8">
+                <div class="col-4">
                     <input asp-for="Product.Price" class="form-control" />
                     <span asp-validation-for="Product.Price" class="text-danger"></span>
+                </div>
+                <div class="col-4">
+                    @Html.DropDownListFor(m => m.Product.UnitId, Model.UnitList, "-Chọn đơn vị tính-",
+                   new { @class = "form-control" })
+                    <span asp-validation-for="Product.UnitId" class="text-danger"></span>
                 </div>
             </div>
 

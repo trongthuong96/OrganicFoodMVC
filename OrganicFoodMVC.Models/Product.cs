@@ -20,7 +20,7 @@ namespace OrganicFoodMVC.Models
         [MaxLength(5000)]
         public string Discription { get; set; }
 
-        [Display(Name = "Số kg")]
+        [Display(Name = "Số Lượng")]
         [Required(ErrorMessage = "Nhập số Kg")]
         [Range(1, 10000, ErrorMessage ="Nhập số kg trong khoảng 1 đến 10000")]
         public int Quantity { get; set; }
@@ -47,6 +47,11 @@ namespace OrganicFoodMVC.Models
         [ForeignKey("BrandId")]
         public Brand Brand { get; set; }
 
+        [Required(ErrorMessage = "Chọn loại đơn vị tính")]
+        [Display(Name = "Đơn vị tính")]
+        public int UnitId { get; set; }
 
+        [ForeignKey("UnitId")]
+        public Unit Unit { get; set; }
     }
 }

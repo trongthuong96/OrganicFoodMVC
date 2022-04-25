@@ -4,7 +4,7 @@
 }
 
 <div class="row pb-3 backgroundWhite">
-
+    <h2>Sản phẩm</h2>
     @foreach (var product in Model)
     {
         <div class="col-lg-3 col-md-6">
@@ -20,7 +20,7 @@
                             <p>List Price: <strike><b class="">$@product.ListPrice.ToString("0.00")</b></strike></p>
                         </div>*@
                         <div style="padding-left:5px;">
-                            <p style="color:maroon">Giá sản phẩm: <b class="">@product.Price.ToString("C0")</b></p>
+                            <p style="color:maroon">Giá sản phẩm: <b class="">@product.Price.ToString("C0") / @product.Unit.Name</b></p>
                         </div>
                     </div>
                     <div>
