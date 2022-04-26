@@ -13,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using OrganicFoodMVC.Models;
+using OrganicFoodMVC.Utility;
 
 namespace OrganicFoodMVC.Areas.Identity.Pages.Account
 {
@@ -51,6 +53,24 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+            [Required]
+            [Display(Name = "Nhập tên")]
+            public string Name { get; set; }
+
+            [Display(Name = "Nhập số nhà, đường, ấp")]
+            public string StreetAddress { get; set; }
+
+            [Display(Name = "Nhập Xã")]
+            public string Village { get; set; }
+
+            [Display(Name = "Nhập Huyện")]
+            public string District { get; set; }
+
+            [Display(Name = "Nhập thành phố")]
+            public string City { get; set; }
+
+            [Display(Name = "Nhập số điện thoại")]
+            public string PhoneNumber { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -101,7 +121,8 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        Name = info.Principal.FindFirstValue(ClaimTypes.Name),
                     };
                 }
                 return Page();
@@ -121,11 +142,22 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    PhoneNumber = Input.PhoneNumber,
+                    Name = Input.Name,
+                    StreetAddress = Input.StreetAddress,
+                    Village = Input.Village,
+                    District = Input.District,
+                    City = Input.City,
+                };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, SD.Role_User_Indi);
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using OrganicFoodMVC.DataAccess.Repository.IRepository;
 using OrganicFoodMVC.Models;
+using OrganicFoodMVC.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 namespace OrganicFoodMVC.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = SD.Role_Admin)]
     public class UnitController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;

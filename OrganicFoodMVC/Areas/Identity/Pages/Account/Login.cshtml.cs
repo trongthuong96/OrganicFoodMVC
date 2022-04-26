@@ -48,9 +48,10 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account
 
             [Required]
             [DataType(DataType.Password)]
+            [Display(Name = "Mật khẩu")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Nhớ mật khẩu?")]
             public bool RememberMe { get; set; }
         }
 

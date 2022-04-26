@@ -49,6 +49,29 @@ namespace OrganicFoodMVC
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
+            //add
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = $"/Identity/Account/Login";
+                options.LogoutPath = $"/Identity/Account/Logout";
+                options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
+            });
+
+            //add login facebook
+            services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = "385437353462687";
+                options.AppSecret = "73e056d6656f2430387aa2d30de19533";
+            });
+
+            //add login google
+            services.AddAuthentication().AddGoogle(options =>
+            {
+                options.ClientId = "491233938582-aomg5rpcpll955hosalr63js0vi61avj.apps.googleusercontent.com";
+                options.ClientSecret = "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";
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
