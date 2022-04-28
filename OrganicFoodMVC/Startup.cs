@@ -44,6 +44,7 @@ namespace OrganicFoodMVC
 
             // add EmailSender
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.Configure<EmailOptions>(Configuration);
 
             //(me) add UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();

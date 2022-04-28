@@ -61,14 +61,14 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "{0} phải dài ít nhất {2} và dài tối đa {1} ký tự.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Mật khẩu")]
             public string Password { get; set; }
 
             [DataType(DataType.Password)]
             [Display(Name = "Nhập lại mật khẩu")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Compare("Password", ErrorMessage = "Mật khẩu không khớp.")]
             public string ConfirmPassword { get; set; }
 
             [Required]
@@ -173,17 +173,17 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account
                         await _userManager.AddToRoleAsync(user, user.Role);
                     }
 
-                    /* var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                     var callbackUrl = Url.Page(
-                         "/Account/ConfirmEmail",
-                         pageHandler: null,
-                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                         protocol: Request.Scheme);
+                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    var callbackUrl = Url.Page(
+                        "/Account/ConfirmEmail",
+                        pageHandler: null,
+                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                        protocol: Request.Scheme);
 
-                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
- */
+                    await _emailSender.SendEmailAsync(Input.Email, "Xác nhận email",
+                        $"Vui lòng xác nhận tài khoản của bạn bằng cách <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Bấm vào đây</a>.");
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
