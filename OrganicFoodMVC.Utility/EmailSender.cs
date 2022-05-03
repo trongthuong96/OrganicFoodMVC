@@ -1,5 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
+using PostmarkDotNet;
+using PostmarkDotNet.Legacy;
+using PostmarkDotNet.Model;
+using System;
+using System.Collections.Specialized;
+using System.IO;
+using System.IO.Pipelines;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
@@ -15,10 +22,12 @@ namespace OrganicFoodMVC.Utility
             emailOptions = options.Value;
         }
 
-        public Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
 
-            string serverMail = emailOptions.ServerMail, username = emailOptions.UsernameMail, pass = emailOptions.Password;
+            // SENDINBLUE
+
+            /*string serverMail = emailOptions.ServerMail, username = emailOptions.UsernameMail, pass = emailOptions.Password;
             int portMail = emailOptions.PortServerMail;
 
             SmtpClient mySmtpClient = new SmtpClient(serverMail, portMail);
@@ -48,7 +57,32 @@ namespace OrganicFoodMVC.Utility
             // text or html
             myMail.IsBodyHtml = true;
 
-            return mySmtpClient.SendMailAsync(myMail);
+            return mySmtpClient.SendMailAsync(myMail);*/
+
+
+            //POSTMARK
+            // Send an email asynchronously:
+            var message = new PostmarkMessage()
+            {
+                To = email,
+                From = "trongthuong@trongthuong.tk",
+                TrackOpens = true,
+                Subject = subject,
+                HtmlBody = htmlMessage,
+                MessageStream = "register",
+            };
+
+            var client = new PostmarkClient("e36750de-fc24-434e-9c3e-6305bfe89f42");
+            var sendResult = await client.SendMessageAsync(message);
+
+            if (sendResult.Status == PostmarkStatus.Success)
+            {
+                Console.WriteLine("Response was: " + sendResult.Message);
+            }
+            else
+            {
+
+            }
         }
 
     }
