@@ -22,12 +22,12 @@ namespace OrganicFoodMVC.Utility
             emailOptions = options.Value;
         }
 
-        public async Task SendEmailAsync(string email, string subject, string htmlMessage)
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
 
             // SENDINBLUE
 
-            /*string serverMail = emailOptions.ServerMail, username = emailOptions.UsernameMail, pass = emailOptions.Password;
+            string serverMail = emailOptions.ServerMail, username = emailOptions.UsernameMail, pass = emailOptions.Password;
             int portMail = emailOptions.PortServerMail;
 
             SmtpClient mySmtpClient = new SmtpClient(serverMail, portMail);
@@ -57,12 +57,12 @@ namespace OrganicFoodMVC.Utility
             // text or html
             myMail.IsBodyHtml = true;
 
-            return mySmtpClient.SendMailAsync(myMail);*/
+            return mySmtpClient.SendMailAsync(myMail);
 
 
             //POSTMARK
             // Send an email asynchronously:
-            var message = new PostmarkMessage()
+           /* var message = new PostmarkMessage()
             {
                 To = email,
                 From = "trongthuong@trongthuong.tk",
@@ -82,7 +82,7 @@ namespace OrganicFoodMVC.Utility
             else
             {
 
-            }
+            }*/
         }
 
     }

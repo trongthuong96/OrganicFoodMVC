@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using OrganicFoodMVC.DataAccess.Repository.IRepository;
+using OrganicFoodMVC.Models;
 
 namespace OrganicFoodMVC.Areas.Identity.Pages.Account.Manage
 {
@@ -13,13 +15,16 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account.Manage
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IUnitOfWork _unitOfWork;
 
         public IndexModel(
             UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            SignInManager<IdentityUser> signInManager,
+            IUnitOfWork unitOfWork)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _unitOfWork = unitOfWork;
         }
 
         public string Username { get; set; }
@@ -33,20 +38,53 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Số điện thoại")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "Họ tên")]
+            public string Name { get; set; }
+
+            [Display(Name = "Số nhà, tên đường")]
+            public string StreetAddress { get; set; }
+
+            [Display(Name = "Xã (Thôn)")]
+            public string Village { get; set; }
+
+            [Display(Name = "Quận (Huyện)")]
+            public string District { get; set; }
+
+            [Display(Name = "Tỉnh (Thành phố)")]
+            public string City { get; set; }
         }
 
         private async Task LoadAsync(IdentityUser user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var email = await _userManager.GetEmailAsync(user);
+            var name = _unitOfWork.ApplicationUser.GetFirstOrDefault(i => i.UserName == userName).Name;
+            var streetAddress = _unitOfWork.ApplicationUser.GetFirstOrDefault(i => i.UserName == userName).StreetAddress;
+            var village = _unitOfWork.ApplicationUser.GetFirstOrDefault(i => i.UserName == userName).Village;
+            var district = _unitOfWork.ApplicationUser.GetFirstOrDefault(i => i.UserName == userName).District;
+            var city = _unitOfWork.ApplicationUser.GetFirstOrDefault(i => i.UserName == userName).City;
+
+
 
             Username = userName;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Email = email,
+                Name = name,
+                StreetAddress = streetAddress,
+                Village = village,
+                District = district,
+                City = city
             };
         }
 
@@ -64,7 +102,9 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var user1 = await _userManager.GetUserAsync(User);
+            var user = _unitOfWork.ApplicationUser.GetFirstOrDefault(i => i.UserName == user1.UserName);
+           
             if (user == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
@@ -86,6 +126,27 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+            // change user
+            var email = await _userManager.GetEmailAsync(user);
+            if (Input.Email != email)
+            {
+                var setEmailResult = await _userManager.SetEmailAsync(user, Input.Email);
+                if (!setEmailResult.Succeeded)
+                {
+                    StatusMessage = "Unexpected error when trying to set email number.";
+                    return RedirectToPage();
+                }
+            }
+
+            // change user
+            user.Name = Input.Name;
+            user.StreetAddress = Input.StreetAddress;
+            user.Village = Input.Village;
+            user.District = Input.District;
+            user.City = Input.City;
+            
+            _unitOfWork.ApplicationUser.Update(user);
+            _unitOfWork.Save();
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

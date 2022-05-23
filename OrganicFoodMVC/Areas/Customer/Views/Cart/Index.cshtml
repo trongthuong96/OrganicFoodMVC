@@ -31,7 +31,7 @@
                                 </div>
                                 <div class="col-12 text-sm-center col-lg-6 text-lg-left">
                                     <h5><strong>@item.Product.Name</strong></h5>
-                                    <p><small>@item.Product.Discription</small></p>
+                                    <p><small>@Html.Raw(item.Product.Discription)</small></p>
                                 </div>
                                 <div class="col-12 text-sm-center col-lg-5 text-lg-right row">
                                     <div class="col-4 text-md-right" style="padding-top:5px;">
@@ -79,11 +79,11 @@
                            && Model.OrderHeader.ApplicationUser.Company.IsAuthorizedCompany)
                             {
                                 <div class="col-8 text-danger">
-                                    Email Must be confirmed for authorized customers!
+                                    Email Phải được xác nhận cho khách hàng được ủy quyền!
                                 </div>
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-outline-warning btn-sm">
-                                        Click here to resend confirmation Email!
+                                        Nhấn vào đây để gửi lại Email xác nhận!
                                     </button>
                                 </div>
                             }
@@ -91,7 +91,7 @@
                             {
                                 <div class="col-sm-12 col-lg-4 col-md-6 offset-lg-8 offset-md-6 ">
 
-                                    <a asp-area="Customer" asp-controller="Cart" asp-action="Summary" class="btn btn-success form-control">Thanh toán</a>
+                                    <a asp-area="Customer" asp-controller="Cart" asp-action="Summary" class="btn btn-success form-control">Xác nhận giỏ hàng</a>
                                 </div>
                             }
                         </div>
@@ -102,6 +102,6 @@
     }
     else
     {
-        <div>There are no items in the shopping cart.</div>
+        <div>Không có sản phẩm trong giỏ hàng.</div>
     }
 </form>

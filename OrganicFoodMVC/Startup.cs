@@ -12,6 +12,7 @@ using OrganicFoodMVC.DataAccess.Data;
 using OrganicFoodMVC.DataAccess.Repository;
 using OrganicFoodMVC.DataAccess.Repository.IRepository;
 using OrganicFoodMVC.Utility;
+using Stripe;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,6 +46,9 @@ namespace OrganicFoodMVC
             // add EmailSender
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<EmailOptions>(Configuration);
+
+            //pay stripe
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
 
             //(me) add UnitOfWork
             services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -103,6 +107,9 @@ namespace OrganicFoodMVC
             app.UseRouting();
             //session
             app.UseSession();
+
+            //stripe
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
 
             app.UseAuthentication();
             app.UseAuthorization();
