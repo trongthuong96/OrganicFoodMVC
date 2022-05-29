@@ -21,7 +21,7 @@ function loadDataTable() {
             { "data": "category.name", "width": "12%" },
             { "data": "brand.name", "width": "12%" },
             { "data": "quantity", "width": "10%" },
-            { "data": "price", "width": "10%", render: $.fn.dataTable.render.number(',', ',', 0) },
+            { "data": "price", "width": "10%", render: $.fn.dataTable.render.number(',', ' đ', ',', 0) },
             {
                 "data": "id",
                 "render": function (data) {

@@ -25,7 +25,7 @@ $(document).ready(function () {
     }
 });
 
-function loadDataTable() {
+function loadDataTable(url) {
     dataTable = $('#tblData').DataTable({
         "ajax": {
             "url": "/Admin/Order/" + url
@@ -36,7 +36,7 @@ function loadDataTable() {
             { "data": "phoneNumber", "width": "15%" },
             { "data": "applicationUser.email", "width": "15%" },
             { "data": "orderStatus", "width": "15%" },
-            { "data": "orderTotal", "width": "15%" },
+            { "data": "orderTotal", "width": "15%", render: $.fn.dataTable.render.number(',',' đ', ',', 0)  },
             {
                 "data": "id",
                 "render": function (data) {
