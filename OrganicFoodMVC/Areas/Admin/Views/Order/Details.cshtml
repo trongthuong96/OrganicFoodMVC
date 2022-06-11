@@ -15,10 +15,10 @@
         <div class="card">
             <div class="card-header bg-dark text-light ml-0 row container">
                 <div class="col-12 d-none d-md-block col-md-6 pb-1">
-                    <i class="fas fa-shopping-cart"></i> &nbsp; Order Summary
+                    <i class="fas fa-shopping-cart"></i> &nbsp; Chi tiết hóa đơn
                 </div>
                 <div class="col-12 col-md-4 offset-md-2 text-right">
-                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-outline-info form-control btn-sm">Back to Orders</a>
+                    <a asp-area="Admin" asp-controller="Order" asp-action="Index" class="btn btn-outline-info form-control btn-sm">Quay về danh sách hóa đơn</a>
                 </div>
             </div>
             <div class="card-body">
@@ -27,11 +27,11 @@
                         <div class="col-12 col-lg-6 pb-4">
                             <div class="row">
                                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="text-primary">PickUp Details:</span>
+                                    <span class="text-primary">Thông tin người đặt hàng:</span>
                                 </h4>
                             </div>
                             <div class="row my-1">
-                                <div class="col-3">Name</div>
+                                <div class="col-3">Họ Tên</div>
                                 <div class="col-9">
                                     <div class="col-9">
                                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">Phone</div>
+                                    <div class="col-3">Số điện thoại</div>
                                     <div class="col-9">
                                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
                                         {
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">Address</div>
+                                    <div class="col-3">Số nhà, đường, ấp</div>
                                     <div class="col-9">
                                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
                                         {
@@ -75,21 +75,21 @@
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">City</div>
+                                    <div class="col-3">Huyện</div>
                                     <div class="col-9">
                                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
                                         {
-                                            <input asp-for="orderHeader.City" type="text" class="form-control" />
-                                            <span asp-validation-for="orderHeader.City" class="text-danger"></span>
+                                            <input asp-for="orderHeader.District" type="text" class="form-control" />
+                                            <span asp-validation-for="orderHeader.District" class="text-danger"></span>
                                         }
                                         else
                                         {
-                                            <input asp-for="orderHeader.City" type="text" class="form-control" readonly />
+                                            <input asp-for="orderHeader.District" type="text" class="form-control" readonly />
                                         }
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">State</div>
+                                    <div class="col-3">Thành Phố</div>
                                     <div class="col-9">
                                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
                                         {
@@ -117,7 +117,7 @@
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">Order Date</div>
+                                    <div class="col-3">Ngày đặt hàng</div>
                                     <div class="col-9">
 
                                         <input value="@Model.orderHeader.OrderDate.ToShortDateString()" type="text" class="form-control" readonly />
@@ -125,7 +125,7 @@
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">Carrier</div>
+                                    <div class="col-3">Vận chuyển</div>
                                     <div class="col-9">
                                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
                                         {
@@ -138,7 +138,7 @@
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">Tracking</div>
+                                    <div class="col-3">Mã vận chuyển</div>
                                     <div class="col-9">
                                         @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
                                         {
@@ -151,7 +151,7 @@
                                     </div>
                                 </div>
                                 <div class="row my-1">
-                                    <div class="col-3">Shipping Date</div>
+                                    <div class="col-3">Ngày vận chuyển</div>
                                     <div class="col-9">
                                         <input value="@Model.orderHeader.ShippingDate.ToShortDateString()"
                                                id="shippingDate" type="text" readonly class="form-control" />
@@ -160,7 +160,7 @@
                                 @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                 {
                                     <div class="row my-1">
-                                        <div class="col-3">Transaction ID</div>
+                                        <div class="col-3">Mã giao dịch</div>
                                         <div class="col-9">
                                             <input asp-for="orderHeader.TransactionId" type="text" readonly class="form-control" />
                                         </div>
@@ -168,7 +168,7 @@
                                     <div class="row my-1">
                                         @if (Model.orderHeader.TransactionId == null)
                                         {
-                                            <div class="col-3">Payment Due Date</div>
+                                            <div class="col-3">Ngày thanh toán</div>
                                             <div class="col-9">
                                                 <input value="@Model.orderHeader.PaymentDueDate.ToShortDateString()"
                                                        readonly type="text" class="form-control" />
@@ -176,7 +176,7 @@
                                         }
                                         else
                                         {
-                                            <div class="col-3">Payment Date</div>
+                                    <div class="col-3">Ngày thanh toán</div>
                                             <div class="col-9">
                                                 <input value="@Model.orderHeader.PaymentDate.ToShortDateString()"
                                                        readonly id="paymentDate" type="text" class="form-control" />
@@ -184,21 +184,22 @@
                                         }
                                     </div>
                                     <div class="row my-1">
-                                        <div class="col-3">Payment Status</div>
+                                        <div class="col-3">Tình trạng</div>
                                         <div class="col-9">
                                             <input asp-for="orderHeader.PaymentStatus" type="text" readonly class="form-control" />
                                         </div>
                                     </div>
                                     @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
                                     {
-                                        <input type="submit" value="Update Order Details" class="btn btn-warning form-control"
+                                        <input type="submit" value="Cập nhập thông tin" class="btn btn-warning form-control"
                                                formaction="/Admin/Order/UpdateOrderDetails" formmethod="post" />
                                     }
                                 }
                             </div>
+                            </div>
                             <div class="col-12 col-lg-5 offset-lg-1">
                                 <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="text-primary">Order Summary</span>
+                                    <span class="text-primary">Thông tin sản phẩm</span>
                                 </h4>
                                 <ul class="list-group mb-3">
                                     @foreach (var details in Model.orderDetails)
@@ -208,11 +209,11 @@
                                                 <div class="col-8">
                                                     <input type="hidden" asp-for="@details.Id" />
                                                     <h6 class="my-0 text-primary">@details.Product.Name</h6>
-                                                    <small class="text-muted">Price : @details.Price</small><br />
-                                                    <small class="text-muted">Quantity : @details.Count</small>
+                                                    <small class="text-muted">Giá tiền : @details.Price</small><br />
+                                                    <small class="text-muted">Số lượng : @details.Count</small>
                                                 </div>
                                                 <div class="col-4">
-                                                    <p class="text-success">@(String.Format("{0:C}", details.Count * details.Price))</p>
+                                                    <p class="text-success">@(String.Format("{0:c0}", details.Count * details.Price))</p>
                                                 </div>
                                             </div>
                                         </li>
@@ -220,10 +221,10 @@
                                     <li class="list-group-item bg-info">
                                         <div class="row container">
                                             <div class="col-6">
-                                                <h5 class="text-white">TOTAL </h5>
+                                                <h5 class="text-white">TỔNG TIỀN </h5>
                                             </div>
                                             <div class="col-6 text-right">
-                                                <h5 class="text-white">@(String.Format("{0:C}", Model.orderHeader.OrderTotal))</h5>
+                                                <h5 class="text-white">@(String.Format("{0:C0}", Model.orderHeader.OrderTotal))</h5>
                                             </div>
                                         </div>
                                     </li>
@@ -235,7 +236,7 @@
                                     @if (Model.orderHeader.OrderStatus == SD.StatusApproved)
                                     {
                                         <a asp-action="StartProcessing" asp-route-id="@Model.orderHeader.Id"
-                                           class="btn btn-primary form-control">Start Processing</a>
+                                           class="btn btn-primary form-control">Chấp nhận đơn hàng</a>
                                     }
                                     @if (Model.orderHeader.OrderStatus == SD.StatusInProcess)
                                     {
@@ -257,19 +258,20 @@
                                  Model.orderHeader.OrderStatus == SD.StatusShipped)
                                 {
                                     <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                            data-key="@Stripe.Value.PublishableKey"
+                                             data-key="@Stripe.Value.PublishableKey"
                                             data-amount="@OrderTotalForStripe"
-                                            data-name="Bulky Book"
-                                            data-label="Place Order"
-                                            data-description="Get Books, For Less"
+                                            data-name="Organic Food"
+                                            data-label="Đặt Hàng"
+                                            data-description="Mua rau, củ, quả xanh tươi sạch."
                                             data-locale="auto"
+                                            data-currency="vnd"
                                             data-allow-remember-me="false"
                                             data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
                                     </script>
                                     <script>
                                         document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
                                     </script>
-                                    <button type="submit" value="Place Order" class="btn btn-success form-control">Pay Now</button>
+                                    <button type="submit" value="Place Order" class="btn btn-success form-control">Thanh toán ngay</button>
                                 }
 
 
@@ -279,7 +281,7 @@
                                 {
                                     <div class="pt-2">
                                         <a asp-action="CancelOrder" asp-route-id="@Model.orderHeader.Id"
-                                           class="btn btn-danger form-control">Cancel Order</a>
+                                           class="btn btn-danger form-control">Hủy đơn hàng</a>
                                     </div>
                                 }
                             </div>
@@ -288,6 +290,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </form>
 
 

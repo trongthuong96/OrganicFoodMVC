@@ -17,8 +17,8 @@
                             <i class="fa fa-shopping-cart"></i> &nbsp;
                             Giỏ Hàng
                         </div>
-                        <div class="col-6 text-lg-end">
-                            <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-info btn-sm">Tiếp tục mua sắm</a>
+                        <div class="col-6 text-right">
+                            <a asp-area="Customer" asp-controller="Home" asp-action="Index" class="btn btn-outline-primary btn-sm">Tiếp tục mua sắm</a>
                         </div>
                     </div>
 
@@ -38,12 +38,12 @@
                                         <h6><strong>@item.Price.ToString("C0")<span class="text-muted"> x </span> @item.Count </strong></h6>
                                     </div>
                                     <div class="col-6 col-sm-4 col-lg-6">
-                                        <div class="float-lg-start mx-1">
+                                        <div class="float-lg-left mx-1">
                                             <a asp-action="plus" asp-route-cartId="@item.Id" class="btn btn-primary">
                                                 <i class="fas fa-plus"></i>
                                             </a>
                                         </div>
-                                        <div class="float-lg-start mx-1">
+                                        <div class="float-lg-left mx-1">
                                             <a asp-action="minus" asp-route-cartId="@item.Id" class="btn btn-danger">
                                                 <i class="fas fa-minus"></i>
                                             </a>

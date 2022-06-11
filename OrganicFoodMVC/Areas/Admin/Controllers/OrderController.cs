@@ -33,6 +33,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return View();
         }
 
+        // Details info
         public IActionResult Details(int id)
         {
             orderVM = new OrderDetailsVM()
@@ -41,9 +42,10 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
                                                 includeProperties: "ApplicationUser"),
                 orderDetails = _unitOfWork.OrderDetails.GetAll(o => o.OrderId == id, includeProperties: "Product")
             };
-            return View();
+            return View(orderVM);
         }
 
+        //details pay
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ActionName("Details")]
@@ -56,7 +58,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
                 //process the payment
                 var options = new ChargeCreateOptions
                 {
-                    Amount = Convert.ToInt32(orderHeader.OrderTotal * 100),
+                    Amount = Convert.ToInt32(orderHeader.OrderTotal),
                     Currency = "usd",
                     Description = "Order ID : " + orderHeader.Id,
                     Source = stripeToken
@@ -86,7 +88,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return RedirectToAction("Details", "Order", new { id = orderHeader.Id });
         }
 
-
+        // order process
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult StartProcessing(int id)
         {
@@ -96,6 +98,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        //order ship
         [HttpPost]
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult ShipOrder()
@@ -110,6 +113,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        // order cancel
         [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult CancelOrder(int id)
         {
@@ -139,15 +143,15 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-       /* public IActionResult UpdateOrderDetails()
+        //order update info
+       public IActionResult UpdateOrderDetails()
         {
             var orderHEaderFromDb = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == orderVM.orderHeader.Id);
             orderHEaderFromDb.Name = orderVM.orderHeader.Name;
             orderHEaderFromDb.PhoneNumber = orderVM.orderHeader.PhoneNumber;
             orderHEaderFromDb.StreetAddress = orderVM.orderHeader.StreetAddress;
+            orderHEaderFromDb.District = orderVM.orderHeader.District;
             orderHEaderFromDb.City = orderVM.orderHeader.City;
-            orderHEaderFromDb.State = orderVM.orderHeader.State;
-            orderHEaderFromDb.PostalCode = orderVM.orderHeader.PostalCode;
             if (orderVM.orderHeader.Carrier != null)
             {
                 orderHEaderFromDb.Carrier = orderVM.orderHeader.Carrier;
@@ -160,7 +164,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             _unitOfWork.Save();
             TempData["Error"] = "Order Details Updated Successfully.";
             return RedirectToAction("Details", "Order", new { id = orderHEaderFromDb.Id });
-        }*/
+        }
 
 
         #region API CALLS
@@ -185,15 +189,15 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
                                 );
             }
 
+            // status order
             switch (status)
             {
                 case "pending":
-                    orderHeaderList = orderHeaderList.Where(o => o.PaymentStatus == SD.PaymentStatusDelayedPayment);
+                    orderHeaderList = orderHeaderList.Where(o => o.PaymentStatus == SD.StatusPending);
                     break;
                 case "inprocess":
                     orderHeaderList = orderHeaderList.Where(o => o.OrderStatus == SD.StatusApproved ||
-                                                            o.OrderStatus == SD.StatusInProcess ||
-                                                            o.OrderStatus == SD.StatusPending);
+                                                            o.OrderStatus == SD.StatusInProcess);
                     break;
                 case "completed":
                     orderHeaderList = orderHeaderList.Where(o => o.OrderStatus == SD.StatusShipped);

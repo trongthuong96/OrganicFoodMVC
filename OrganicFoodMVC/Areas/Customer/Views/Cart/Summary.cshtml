@@ -17,8 +17,8 @@
                         <i class="fa fa-shopping-cart"></i> &nbsp;
                         Thông tin đơn hàng
                     </div>
-                    <div class="col-6 text-lg-end">
-                        <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-outline-info btn-sm">Trở về giỏ hàng</a>
+                    <div class="col-6 text-lg-right">
+                        <a asp-area="Customer" asp-controller="Cart" asp-action="Index" class="btn btn-outline-primary btn-sm">Trở về giỏ hàng</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -140,8 +140,9 @@
                             }
 
                             @if (Model.OrderHeader.ApplicationUser.Company == null ||
-                     !Model.OrderHeader.ApplicationUser.Company.IsAuthorizedCompany)
+                    !Model.OrderHeader.ApplicationUser.Company.IsAuthorizedCompany)
                             {
+                               
                                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                                         data-key="@Stripe.Value.PublishableKey"
                                         data-amount="@OrderTotalForStripe"
@@ -172,7 +173,16 @@
                                                 }
                                             }
                                             else if (this.value == 'paymentOnDelivery') {
-                                                $("#buttonStripe").remove(button);
+                                                if (button == null) {
+                                                    var button = document.createElement('button');
+                                                    button.type = 'submit';
+                                                    button.id = 'buttonDelivery';
+                                                    button.innerHTML = 'Đặt Hàng';
+                                                    button.className = 'btn btn-primary form-control';
+                                                    button.value = 'Place Order';
+                                                    var container = document.getElementById('container');
+                                                    container.appendChild(button);
+                                                }
                                             }
                                         });
                                     });
