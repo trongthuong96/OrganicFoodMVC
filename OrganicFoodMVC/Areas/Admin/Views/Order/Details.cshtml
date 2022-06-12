@@ -33,18 +33,17 @@
                             <div class="row my-1">
                                 <div class="col-3">Họ Tên</div>
                                 <div class="col-9">
-                                    <div class="col-9">
-                                        @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
-                                        {
-                                            <input asp-for="orderHeader.Name" type="text" class="form-control" />
-                                            <span asp-validation-for="orderHeader.Name" class="text-danger"></span>
-                                        }
-                                        else
-                                        {
-                                            <input asp-for="orderHeader.Name" type="text" class="form-control" readonly />
-                                        }
+                                    @if (User.IsInRole(SD.Role_Employee) || User.IsInRole(SD.Role_Admin))
+                                    {
+                                        <input asp-for="orderHeader.Name" type="text" class="form-control" />
+                                        <span asp-validation-for="orderHeader.Name" class="text-danger"></span>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="orderHeader.Name" type="text" class="form-control" readonly />
+                                    }
 
-                                    </div>
+                                </div>
                                 </div>
                                 <div class="row my-1">
                                     <div class="col-3">Số điện thoại</div>
@@ -196,96 +195,96 @@
                                     }
                                 }
                             </div>
-                            </div>
-                            <div class="col-12 col-lg-5 offset-lg-1">
-                                <h4 class="d-flex justify-content-between align-items-center mb-3">
-                                    <span class="text-primary">Thông tin sản phẩm</span>
-                                </h4>
-                                <ul class="list-group mb-3">
-                                    @foreach (var details in Model.orderDetails)
-                                    {
-                                        <li class="list-group-item d-flex justify-content-between p-2">
-                                            <div class="row container">
-                                                <div class="col-8">
-                                                    <input type="hidden" asp-for="@details.Id" />
-                                                    <h6 class="my-0 text-primary">@details.Product.Name</h6>
-                                                    <small class="text-muted">Giá tiền : @details.Price</small><br />
-                                                    <small class="text-muted">Số lượng : @details.Count</small>
-                                                </div>
-                                                <div class="col-4">
-                                                    <p class="text-success">@(String.Format("{0:c0}", details.Count * details.Price))</p>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    }
-                                    <li class="list-group-item bg-info">
+                           
+                        <div class="col-12 col-lg-5 offset-lg-1">
+                            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="text-primary">Thông tin sản phẩm</span>
+                            </h4>
+                            <ul class="list-group mb-3">
+                                @foreach (var details in Model.orderDetails)
+                                {
+                                    <li class="list-group-item d-flex justify-content-between p-2">
                                         <div class="row container">
-                                            <div class="col-6">
-                                                <h5 class="text-white">TỔNG TIỀN </h5>
+                                            <div class="col-8">
+                                                <input type="hidden" asp-for="@details.Id" />
+                                                <h6 class="my-0 text-primary">@details.Product.Name</h6>
+                                                <small class="text-muted">Giá tiền : @details.Price</small><br />
+                                                <small class="text-muted">Số lượng : @details.Count</small>
                                             </div>
-                                            <div class="col-6 text-right">
-                                                <h5 class="text-white">@(String.Format("{0:C0}", Model.orderHeader.OrderTotal))</h5>
+                                            <div class="col-4">
+                                                <p class="text-success">@(String.Format("{0:c0}", details.Count * details.Price))</p>
                                             </div>
                                         </div>
                                     </li>
-                                </ul>
-
-                                @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
-                                {
-                                    <br />
-                                    @if (Model.orderHeader.OrderStatus == SD.StatusApproved)
-                                    {
-                                        <a asp-action="StartProcessing" asp-route-id="@Model.orderHeader.Id"
-                                           class="btn btn-primary form-control">Chấp nhận đơn hàng</a>
-                                    }
-                                    @if (Model.orderHeader.OrderStatus == SD.StatusInProcess)
-                                    {
-                                        <input type="submit" value="Ship Order" onclick="return validateInput()"
-                                               class="btn btn-primary form-control"
-                                               formaction="/Admin/Order/ShipOrder" formmethod="post" />
-                                    }
                                 }
-                                else
-                                {
-                                    <label class="btn btn-primary form-control">@Model.orderHeader.OrderStatus</label>
-                                }
-
-                                @{
-                                    var OrderTotalForStripe = Model.orderHeader.OrderTotal * 100;
-                                }
-
-                                @if (Model.orderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
-                                 Model.orderHeader.OrderStatus == SD.StatusShipped)
-                                {
-                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                             data-key="@Stripe.Value.PublishableKey"
-                                            data-amount="@OrderTotalForStripe"
-                                            data-name="Organic Food"
-                                            data-label="Đặt Hàng"
-                                            data-description="Mua rau, củ, quả xanh tươi sạch."
-                                            data-locale="auto"
-                                            data-currency="vnd"
-                                            data-allow-remember-me="false"
-                                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
-                                    </script>
-                                    <script>
-                                        document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
-                                    </script>
-                                    <button type="submit" value="Place Order" class="btn btn-success form-control">Thanh toán ngay</button>
-                                }
-
-
-                                @if (Model.orderHeader.OrderStatus != SD.StatusRefunded &&
-                             Model.orderHeader.OrderStatus != SD.StatusCancelled &&
-                             (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee)))
-                                {
-                                    <div class="pt-2">
-                                        <a asp-action="CancelOrder" asp-route-id="@Model.orderHeader.Id"
-                                           class="btn btn-danger form-control">Hủy đơn hàng</a>
+                                <li class="list-group-item bg-info">
+                                    <div class="row container">
+                                        <div class="col-6">
+                                            <h5 class="text-white">TỔNG TIỀN </h5>
+                                        </div>
+                                        <div class="col-6 text-right">
+                                            <h5 class="text-white">@(String.Format("{0:C0}", Model.orderHeader.OrderTotal))</h5>
+                                        </div>
                                     </div>
+                                </li>
+                            </ul>
+
+                            @if (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee))
+                            {
+                                <br />
+                                @if (Model.orderHeader.OrderStatus == SD.StatusApproved)
+                                {
+                                    <a asp-action="StartProcessing" asp-route-id="@Model.orderHeader.Id"
+                                        class="btn btn-primary form-control">Chấp nhận đơn hàng</a>
                                 }
-                            </div>
+                                @if (Model.orderHeader.OrderStatus == SD.StatusInProcess)
+                                {
+                                    <input type="submit" value="Đã giao hàng" onclick="return validateInput()"
+                                            class="btn btn-primary form-control"
+                                            formaction="/Admin/Order/ShipOrder" formmethod="post" />
+                                }
+                            }
+                            else
+                            {
+                                <label class="btn btn-primary form-control">@Model.orderHeader.OrderStatus</label>
+                            }
+
+                            @{
+                                var OrderTotalForStripe = Model.orderHeader.OrderTotal * 100;
+                            }
+
+                            @if (Model.orderHeader.PaymentStatus == SD.PaymentStatusDelayedPayment &&
+                                Model.orderHeader.OrderStatus == SD.StatusShipped)
+                            {
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                            data-key="@Stripe.Value.PublishableKey"
+                                        data-amount="@OrderTotalForStripe"
+                                        data-name="Organic Food"
+                                        data-label="Đặt Hàng"
+                                        data-description="Mua rau, củ, quả xanh tươi sạch."
+                                        data-locale="auto"
+                                        data-currency="vnd"
+                                        data-allow-remember-me="false"
+                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png">
+                                </script>
+                                <script>
+                                    document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+                                </script>
+                                <button type="submit" value="Place Order" class="btn btn-success form-control">Thanh toán ngay</button>
+                            }
+
+
+                            @if (Model.orderHeader.OrderStatus != SD.StatusRefunded &&
+                            Model.orderHeader.OrderStatus != SD.StatusCancelled &&
+                            (User.IsInRole(SD.Role_Admin) || User.IsInRole(SD.Role_Employee)))
+                            {
+                                <div class="pt-2">
+                                    <a asp-action="CancelOrder" asp-route-id="@Model.orderHeader.Id"
+                                        class="btn btn-danger form-control">Hủy đơn hàng</a>
+                                </div>
+                            }
                         </div>
+                        
                     </div>
                 </div>
             </div>
@@ -301,12 +300,12 @@
             var tracking = document.getElementById("trackingNumber").value;
             var carrier = document.getElementById("carrier").value;
             if (tracking.toString() == '') {
-                swal("Error", "Please enter tracking number", "error")
+                swal("Error", "Nhập mã vận chuyển", "error")
                 return false;
             }
             else {
                 if (carrier.toString() == '') {
-                    swal("Error", "Please enter carrier", "error")
+                    swal("Error", "Nhập tên đơn vị vận chuyển", "error")
                     return false;
                 }
                 else {

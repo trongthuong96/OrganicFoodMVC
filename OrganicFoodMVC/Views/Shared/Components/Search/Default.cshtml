@@ -1,0 +1,18 @@
+﻿<form method="get" asp-area="Customer" asp-controller="Category" asp-action="index" class="search-header">
+    <div class="input-group w-100">
+        <select class="custom-select border-right" name="id">
+            <option value="0">Tất cả</option>
+            @foreach (var item in Model)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+        <input type="text" class="form-control" name="productName" placeholder="Nhập sản phẩm cần tìm">
+
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-search"></i> Tìm kiếm
+            </button>
+        </div>
+    </div>
+</form>

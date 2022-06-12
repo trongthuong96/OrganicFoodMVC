@@ -27,6 +27,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.16" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    <PackageReference Include="PagedList" Version="1.17.0" />
+    <PackageReference Include="PagedList.Net" Version="1.0.0" />
     <PackageReference Include="Stripe.net" Version="39.110.0" />
     <PackageReference Include="Twilio" Version="5.75.0" />
   </ItemGroup>

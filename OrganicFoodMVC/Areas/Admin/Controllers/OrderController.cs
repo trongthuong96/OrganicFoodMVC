@@ -162,7 +162,7 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             }
 
             _unitOfWork.Save();
-            TempData["Error"] = "Order Details Updated Successfully.";
+            TempData["Error"] = "Cập nhập thành công.";
             return RedirectToAction("Details", "Order", new { id = orderHEaderFromDb.Id });
         }
 

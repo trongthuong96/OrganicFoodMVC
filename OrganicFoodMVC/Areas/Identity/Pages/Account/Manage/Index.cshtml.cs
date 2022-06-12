@@ -149,7 +149,7 @@ namespace OrganicFoodMVC.Areas.Identity.Pages.Account.Manage
             _unitOfWork.Save();
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Cập nhập thông tin thành công";
             return RedirectToPage();
         }
     }

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<OrganicFoodMVC.Models.Product>
+<!-- =============== SECTION ITEMS =============== -->
+<section class="padding-bottom-sm">
+
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase"></h4>
+    </header>
+
+    <div class="row row-sm">
+        @foreach (var product in Model)
+        {
+            <div class="col-xl-2 col-lg-3 col-md-4 col-6">
+                <div class="card card-sm card-product-grid">
+                    <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="img-wrap"> <img src="@product.ImageUrl"> </a>
+                    <figcaption class="info-wrap">
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id" class="title">@product.Name</a>
+                        <div class="price mt-1">@product.Price.ToString("C0") / @product.Unit.Name</div> <!-- price-wrap.// -->
+                    </figcaption>
+                </div>
+            </div> <!-- col.// -->
+        }
+    </div> <!-- row.// -->
+</section>
+<!-- =============== SECTION ITEMS .//END =============== -->

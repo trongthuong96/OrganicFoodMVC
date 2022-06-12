@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using PagedList;
 
 namespace OrganicFoodMVC.Areas.Customer.Controllers
 {
@@ -28,7 +29,7 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
         }
 
         // home page
-        public IActionResult Index(int? page)
+        public IActionResult Index()
         {
             IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
 
@@ -42,7 +43,6 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
 
                 HttpContext.Session.SetInt32(SD.ssShoppingCart, count);
             }
-
             return View(products);
         }
 
@@ -119,5 +119,29 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        [HttpGet]
+        public IActionResult GetAllPost(int page)
+        {
+            var data = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
+
+            if (page > 0)
+            {
+                page = page;
+            }
+            else
+            {
+                page = 1;
+            }
+            int start = (int)(page - 1) * 10;
+            ViewBag.pageCurrent = page;
+            int totalPage = data.Count();
+            float totalNumsize = (totalPage / (float)10);
+            int numSize = (int)Math.Ceiling(totalNumsize);
+            ViewBag.numSize = numSize;
+            
+            return Json(new { data = data.ToPagedList(page, 10),pageCurrent = page,numSize=numSize });
+        }
+
     }
 }
