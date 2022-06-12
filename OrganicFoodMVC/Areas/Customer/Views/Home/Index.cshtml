@@ -158,8 +158,10 @@
     </div> <!-- card.// -->
 </section>
 <!-- =============== SECTION 2 END =============== -->
+
 <!-- =============== SECTION ITEMS =============== -->
-<section class="padding-bottom-sm">
+
+@*<section class="padding-bottom-sm">
 
     <header class="section-heading heading-line">
         <h4 class="title-section text-uppercase">Tất cả sản phẩm</h4>
@@ -173,18 +175,35 @@
                     <a asp-action="Details" asp-route-id="@product.Id" class="img-wrap"> <img src="@product.ImageUrl"> </a>
                     <figcaption class="info-wrap">
                         <a asp-action="Details" asp-route-id="@product.Id" class="title">@product.Name</a>
-                        <div class="price mt-1">@product.Price.ToString("C0") / @product.Unit.Name</div> <!-- price-wrap.// -->
-                    </figcaption>
+                        <div class="price mt-1">@product.Price.ToString("C0") / @product.Unit.Name</div>--> <!-- price-wrap.// -->
+                    <!--</figcaption>
                 </div>
-            </div> <!-- col.// -->
-        }
+            </div>--> <!-- col.// -->
+        <!--}
+    </div>--> <!-- row.// -->
+<!--</section>*@
+
+<!-- =============== SECTION ITEMS .//END =============== -->
+
+
+<!-- =============== SECTION ITEMS =============== -->
+<section class="padding-bottom-sm">
+
+    <header class="section-heading heading-line">
+        <h4 class="title-section text-uppercase">Tất cả sản phẩm</h4>
+    </header>
+
+    <div class="row row-sm" id="tblData">
+
     </div> <!-- row.// -->
 </section>
 <!-- =============== SECTION ITEMS .//END =============== -->
 
-<div class="row justify-content-center">
+<!--pagination-->
+@*<div class="row justify-content-center">
     <nav aria-label="Page navigation sample" class="m-auto">
-        <ul class="pagination">
+        <ul class="pagination" id="paged">
+
             <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
             <li class="page-item active"><a class="page-link" href="#">1</a></li>
             <li class="page-item"><a class="page-link" href="#">2</a></li>
@@ -192,10 +211,17 @@
             <li class="page-item"><a class="page-link" href="#">4</a></li>
             <li class="page-item"><a class="page-link" href="#">5</a></li>
             <li class="page-item"><a class="page-link" href="#">Next</a></li>
+
         </ul>
     </nav>
-</div>
+</div>*@
 
+<!--Pagination-->
+<div class="row justify-content-center">
+    <nav aria-label="Page navigation sample" class="m-auto" id="paged">
+
+    </nav>
+</div>
 
 @section Scripts {
     <script src="~/js/pagination_home.js"></script>

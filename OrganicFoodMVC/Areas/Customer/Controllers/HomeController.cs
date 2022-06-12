@@ -11,8 +11,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
-using PagedList;
+using Jquery_Mvc_Paging.Helper;
 
 namespace OrganicFoodMVC.Areas.Customer.Controllers
 {
@@ -120,27 +119,13 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        // pagination home
         [HttpGet]
-        public IActionResult GetAllPost(int page)
+        public IActionResult GetPage(int pageNumber = 1, int pageSize = 12)
         {
             var data = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
-
-            if (page > 0)
-            {
-                page = page;
-            }
-            else
-            {
-                page = 1;
-            }
-            int start = (int)(page - 1) * 10;
-            ViewBag.pageCurrent = page;
-            int totalPage = data.Count();
-            float totalNumsize = (totalPage / (float)10);
-            int numSize = (int)Math.Ceiling(totalNumsize);
-            ViewBag.numSize = numSize;
-            
-            return Json(new { data = data.ToPagedList(page, 10),pageCurrent = page,numSize=numSize });
+            var pageData = Pagination.PagedResult(data, pageNumber, pageSize);
+            return Json(pageData);
         }
 
     }
