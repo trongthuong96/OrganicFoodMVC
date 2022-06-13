@@ -36,12 +36,15 @@ function PaggingTemplate(totalPage, currentPage) {
     var PageNumberArray = Array();
 
 
-    var countIncr = 1;
-    for (var i = currentPage; i <= totalPage; i++) {
-        PageNumberArray[0] = currentPage;
-        if (totalPage != currentPage && PageNumberArray[countIncr - 1] != totalPage) {
-            PageNumberArray[countIncr] = i + 1;
-        }
+    var countIncr = 0;
+
+    var j = 1;
+    if (currentPage > 3) {
+        j = currentPage - 2;
+    }
+
+    for (j; j <= totalPage; j++) {
+        PageNumberArray[countIncr] = j;
         countIncr++;
     };
     PageNumberArray = PageNumberArray.slice(0, 5);
@@ -55,17 +58,34 @@ function PaggingTemplate(totalPage, currentPage) {
         BackwardOne = currentPage - 1;
     }
 
-    template = template + '<ul class="pagination">' +
-        '<li class="page-item"><a class="page-link" onclick="GetPageData(' + FirstPage + ')">Trang đầu</a></li>' +
-        '<a onclick="GetPageData(' + BackwardOne + ')"></a>';
+    template = template + '<ul class="pagination">';
+
+    //
+    if (currentPage == 1) {
+        template = template + '<li class="page-item disabled"><a class="page-link" onclick="GetPageData(' + FirstPage + ')">Trang đầu</a></li>';
+    } else {
+        template = template + '<li class="page-item"><a class="page-link" onclick="GetPageData(' + FirstPage + ')">Trang đầu</a></li>';
+    }
+    template = template + '<a onclick="GetPageData(' + BackwardOne + ')"></a>';
 
     var numberingLoop = "";
     for (var i = 0; i < PageNumberArray.length; i++) {
-        numberingLoop = numberingLoop + '<li class="page-item "><a class="page-link" onclick="GetPageData(' + PageNumberArray[i] + ')" >' + PageNumberArray[i] + '</a></li>'
+        //
+        if (currentPage == PageNumberArray[i]) {
+            numberingLoop = numberingLoop + '<li class="page-item active"><a class="page-link" onclick="GetPageData(' + PageNumberArray[i] + ')" >' + PageNumberArray[i] + '</a></li>';
+        } else {
+            numberingLoop = numberingLoop + '<li class="page-item"><a class="page-link" onclick="GetPageData(' + PageNumberArray[i] + ')" >' + PageNumberArray[i] + '</a></li>';
+        }
+        
     }
-    template = template + numberingLoop + '<a onclick="GetPageData(' + ForwardOne + ')" ></a>' +
+    template = template + numberingLoop + '<a onclick="GetPageData(' + ForwardOne + ')" ></a>';
 
-        '<li class="page-item"><a class="page-link" onclick="GetPageData(' + LastPage + ')">Trang cuối</a></li></ul>';
+    if (currentPage == totalPage) {
+        template = template + '<li class="page-item disabled"><a class="page-link" onclick="GetPageData(' + LastPage + ')">Trang cuối</a></li></ul>';
+    } else {
+        template = template + '<li class="page-item"><a class="page-link" onclick="GetPageData(' + LastPage + ')">Trang cuối</a></li></ul>';
+    }
+        
     $("#paged").append(template);
     $('#selectedId').change(function () {
         GetPageData(1, $(this).val());
