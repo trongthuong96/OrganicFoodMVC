@@ -26,10 +26,13 @@
         if (results == null) {
             return null;
         }
-        return decodeURI(results[1]) || 0;
+        return decodeURI(results[1]);
     }
     var id = $.urlParam('id');
     var nameSearch = $.urlParam('productName');
-    $("#mySelectBox").val(id).change();
+
+    if (id != null) {
+        $("#mySelectBox").val(id).change();
+    }
     $("#myInputSearch").val(nameSearch);
 </script>
