@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using OrganicFoodMVC.DataAccess.Repository.IRepository;
 using OrganicFoodMVC.Models;
+using OrganicFoodMVC.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +25,34 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
         // Search product with category and product name
         public IActionResult Index(int id, string productName)
         {
-            IEnumerable<Product> products;
-            if((productName == "" || productName == null) && id == 0)
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit"); ;
+            string romoveHintProductName;
+            if (productName != "" && productName != null)
             {
-                products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
-            }    
-            else if (productName == "" || productName == null || id < 0)
-            {
-                products = _unitOfWork.Product.GetAll(p => p.CategoryId == id || p.CategoryId == id, includeProperties: "Category,Brand,Unit");
+                romoveHintProductName = SD.RemoveVietnameseTone(productName);
             }
             else
             {
-                products = _unitOfWork.Product.GetAll(p => p.CategoryId == id && p.Name.Contains(productName), includeProperties: "Category,Brand,Unit");
+                romoveHintProductName = productName;
+            }
+           
+            if((productName == "" || productName == null) && id == 0)
+            { }    
+            else if (productName == "" || productName == null || id == 0)
+            {
+                if(productName != "" && productName != null)
+                {
+                    products = products.Where(p => SD.RemoveVietnameseTone(p.Name).Contains(romoveHintProductName));
+                }
+                else
+                {
+                    products = products.Where(p => p.CategoryId == id);
+                }
+                
+            }
+            else if((productName != "" && productName != null) && id > 0)
+            {
+                products = products.Where(p => p.CategoryId == id && SD.RemoveVietnameseTone(p.Name).Contains(romoveHintProductName));
             }
 
             return View(products);
