@@ -84,7 +84,7 @@ function LockUnlock(id) {
                 contentType: "application/json",
                 success: function (data) {
                     if (data.success) {
-                        toastr.success(data.message);
+                        toastr.info(data.message);
                         dataTable.ajax.reload();
                     }
                     else {

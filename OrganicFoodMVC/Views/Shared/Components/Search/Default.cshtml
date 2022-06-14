@@ -1,7 +1,7 @@
 ﻿@using System.Web
 <form method="get" asp-area="Customer" asp-controller="Category" asp-action="index" class="search-header">
     <div class="input-group w-100">
-        <select class="custom-select border-right" name="id" id="mySelectBox">
+        <select class="custom-select border-right" name="categoryid" id="mySelectBox">
             <option value="0" name="0">Tất cả</option>
             
             @foreach (var item in Model)
@@ -28,11 +28,13 @@
         }
         return decodeURI(results[1]);
     }
-    var id = $.urlParam('id');
+    var categoryid = $.urlParam('categoryid');
     var nameSearch = $.urlParam('productName');
 
-    if (id != null) {
+    if (categoryid != null) {
         $("#mySelectBox").val(id).change();
     }
-    $("#myInputSearch").val(nameSearch.split('+').join(' '));
+    if (nameSearch != null) {
+        $("#myInputSearch").val(nameSearch.split('+').join(' '));
+    }
 </script>

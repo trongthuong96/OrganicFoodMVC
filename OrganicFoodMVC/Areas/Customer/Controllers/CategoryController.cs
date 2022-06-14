@@ -23,9 +23,9 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
 
 
         // Search product with category and product name
-        public IActionResult Index(int id, string productName)
+        public IActionResult Index(int categoryid, string productName)
         {
-            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit"); ;
+            IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
             string romoveHintProductName;
             if (productName != "" && productName != null)
             {
@@ -36,9 +36,9 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
                 romoveHintProductName = productName;
             }
            
-            if((productName == "" || productName == null) && id == 0)
+            if((productName == "" || productName == null) && categoryid == 0)
             { }    
-            else if (productName == "" || productName == null || id == 0)
+            else if (productName == "" || productName == null || categoryid == 0)
             {
                 if(productName != "" && productName != null)
                 {
@@ -46,13 +46,13 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
                 }
                 else
                 {
-                    products = products.Where(p => p.CategoryId == id);
+                    products = products.Where(p => p.CategoryId == categoryid);
                 }
                 
             }
-            else if((productName != "" && productName != null) && id > 0)
+            else if((productName != "" && productName != null) && categoryid > 0)
             {
-                products = products.Where(p => p.CategoryId == id && SD.RemoveVietnameseTone(p.Name).Contains(romoveHintProductName));
+                products = products.Where(p => p.CategoryId == categoryid && SD.RemoveVietnameseTone(p.Name).Contains(romoveHintProductName));
             }
 
             return View(products);
