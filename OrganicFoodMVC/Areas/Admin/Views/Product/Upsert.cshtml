@@ -10,7 +10,7 @@
         @if (Model.Product.Id != 0)
         {
             //edit
-            title = "Edit Product";
+            title = "Cập nhập sản phẩm";
             <input type="hidden" asp-for="Product.Id" />
             <input type="hidden" asp-for="Product.ImageUrl" />
         }
@@ -97,10 +97,10 @@
                     {
                         <div class="row">
                             <div class="col">
-                                <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Create</button>
+                                <button type="submit" onclick="return validateInput()" class="btn btn-primary form-control">Thêm</button>
                             </div>
                             <div class="col">
-                                <a asp-action="Index" class="btn btn-success form-control">Back to List</a>
+                                <a asp-action="Index" class="btn btn-success form-control">Trở về</a>
                             </div>
                         </div>
                     }
