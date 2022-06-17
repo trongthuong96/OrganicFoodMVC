@@ -6,8 +6,11 @@
 
 <br />
 <div class="row">
-    <div class="col-10">
+    <div class="col-8">
         <h2 class="text-primary">Danh sách sản phẩm </h2>
+    </div>
+    <div class="col-2 text-right">
+        <a class="btn btn-info text-white" onclick="location.href='@Url.Action("ExportToExcel", "Product")'"><i class="fas  fa-file-export"></i> &nbsp;Xuất Excel</a>
     </div>
     <div class="col-2 text-right">
         <a class="btn btn-primary" asp-action="Upsert"><i class="fas fa-plus"></i> &nbsp; Tạo Mới</a>
