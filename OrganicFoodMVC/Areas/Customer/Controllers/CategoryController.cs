@@ -2,11 +2,13 @@
 using Microsoft.Extensions.Logging;
 using OrganicFoodMVC.DataAccess.Repository.IRepository;
 using OrganicFoodMVC.Models;
+using OrganicFoodMVC.Models.ViewModels;
 using OrganicFoodMVC.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 
 namespace OrganicFoodMVC.Areas.Customer.Controllers
 {
@@ -23,7 +25,7 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
 
 
         // Search product with category and product name
-        public IActionResult Index(int categoryId, string productName)
+        public IActionResult Index(int categoryId, string productName, int pageNumber = 1, int pageSize = 6)
         {
             IEnumerable<Product> products = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
             string romoveHintProductName;
@@ -55,7 +57,7 @@ namespace OrganicFoodMVC.Areas.Customer.Controllers
                 products = products.Where(p => p.CategoryId == categoryId && SD.RemoveVietnameseTone(p.Name).Contains(romoveHintProductName));
             }
 
-            return View(products);
+            return View(Pagination.PagedResult(products, pageNumber, pageSize));
         }
     }
 }

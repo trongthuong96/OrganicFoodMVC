@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace Jquery_Mvc_Paging.Helper
+namespace OrganicFoodMVC.Utility
 {
     public static class Pagination
     {
