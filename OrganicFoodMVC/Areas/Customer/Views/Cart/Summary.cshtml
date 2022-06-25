@@ -97,12 +97,12 @@
                                                 <h6 class="my-0">@details.Product.Name</h6>
                                                 <small class="text-muted">Số Lượng: @details.Count</small>
                                             </div>
-                                            <span class="text-muted">@((details.Price * details.Count).ToString("C0")) </span>
+                                            <span class="text-muted">@((details.Price * details.Count).ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))) </span>
                                         </li>
                                     }
                                     <li class="list-group-item d-flex justify-content-between bg-light">
                                         <small class="text-info">Tổng tiền (VNĐ)</small>
-                                        <strong class="text-info">@(Model.OrderHeader.OrderTotal.ToString("C0"))</strong>
+                                        <strong class="text-info">@(Model.OrderHeader.OrderTotal.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")))</strong>
                                     </li>
                                 </ul>
 

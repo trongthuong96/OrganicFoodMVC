@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="col-12 text-sm-center col-lg-6 text-lg-right row">
                                     <div class="col-4 text-md-left" style="padding-top:5px;">
-                                        <h6><strong>@item.Price.ToString("C0")<span class="text-muted"> x </span> @item.Count </strong></h6>
+                                        <h6><strong>@item.Price.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))<span class="text-muted"> x </span> @item.Count </strong></h6>
                                     </div>
                                     <div class="col-2 col-sm-4 col-lg-5">
                                         <div class="float-lg-left mx-1">
@@ -64,7 +64,7 @@
                                 <ul class="list-group">
                                     <li class="list-group-item d-flex justify-content-between bg-light">
                                         <span class="text-info"> Tổng (VNĐ)</span>
-                                        <strong class="text-info"><span id="txtOrderTotal">@Model.OrderHeader.OrderTotal.ToString("C0")</span></strong>
+                                        <strong class="text-info"><span id="txtOrderTotal">@Model.OrderHeader.OrderTotal.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN"))</span></strong>
                                     </li>
                                 </ul>
                             </div>

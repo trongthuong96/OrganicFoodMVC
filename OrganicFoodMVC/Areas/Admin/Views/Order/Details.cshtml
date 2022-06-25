@@ -212,7 +212,7 @@
                                                 <small class="text-muted">Số lượng : @details.Count</small>
                                             </div>
                                             <div class="col-4">
-                                                <p class="text-success">@(String.Format("{0:c0}", details.Count * details.Price))</p>
+                                                <p class="text-success">@((details.Count * details.Price).ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")))</p>
                                             </div>
                                         </div>
                                     </li>
@@ -223,7 +223,7 @@
                                             <h5 class="text-white">TỔNG TIỀN </h5>
                                         </div>
                                         <div class="col-6 text-right">
-                                            <h5 class="text-white">@(String.Format("{0:C0}", Model.orderHeader.OrderTotal))</h5>
+                                            <h5 class="text-white">@(Model.orderHeader.OrderTotal.ToString("C0", System.Globalization.CultureInfo.GetCultureInfo("vi-VN")))</h5>
                                         </div>
                                     </div>
                                 </li>
@@ -316,11 +316,11 @@
         $(document).ready(function () {
             var shippingDate = document.getElementById("shippingDate");
             if (shippingDate.value == '1/1/0001') {
-                shippingDate.value = "";
+                shippingDate.value = @DateTime.Now.AddDays(7).ToShortDateString();
             }
             var paymentDate = document.getElementById("paymentDate");
             if (paymentDate.value == '1/1/0001') {
-                paymentDate.value = "";
+                paymentDate.value = @DateTime.Now.AddDays(7).ToShortDateString();
             }
         });
     </script>

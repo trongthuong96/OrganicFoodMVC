@@ -28,6 +28,8 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
             _unitOfWork = unitOfWork;
         }
 
+        // order process
+        [Authorize(Roles = SD.Role_Admin + "," + SD.Role_Employee)]
         public IActionResult Index()
         {
             return View();

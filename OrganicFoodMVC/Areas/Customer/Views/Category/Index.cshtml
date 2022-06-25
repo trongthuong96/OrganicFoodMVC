@@ -1,10 +1,31 @@
 ﻿@model OrganicFoodMVC.Utility.PagedData<OrganicFoodMVC.Models.Product>
+@{
+    ViewData["Title"] = "Tất cả";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@{ string str = ViewContext.HttpContext.Request.Query["categoryId"];}
+
+@try
+{
+    if (int.Parse(str) > 0)
+    {
+        ViewData["Title"] = Model.Data.FirstOrDefault().Category.Name + " / " + ViewContext.HttpContext.Request.Query["productName"];
+    }
+    else if(int.Parse(str) == 0)
+    {
+        ViewData["Title"] = ViewData["Title"] + " / " + ViewContext.HttpContext.Request.Query["productName"];
+    }
+}catch{}
+
+
 <!-- =============== SECTION ITEMS =============== -->
 <section class="padding-bottom-sm">
 
     <header class="section-heading heading-line">
-        <h4 class="title-section text-uppercase"></h4>
+        <h4 class="title-section text-uppercase">@ViewData["Title"]</h4>
     </header>
+
 
     <div class="row row-sm">
         @foreach (var product in Model.Data)

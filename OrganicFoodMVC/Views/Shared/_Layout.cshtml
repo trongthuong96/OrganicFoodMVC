@@ -80,7 +80,17 @@
                             @if (User.IsInRole(SD.Role_Admin))
                             {
                                 <div class="widget-header mr-3">
-                                    <a asp-area="Admin" asp-controller="Order" class="widget-view">
+                                    <a asp-area="Admin" asp-controller="Order" asp-action="index" class="widget-view">
+                                        <div class="icon-area">
+                                            <i class="fa fa-store"></i>
+                                        </div>
+                                        <small class="text"> Hóa đơn </small>
+                                    </a>
+                                </div>
+                            } else if (User.IsInRole(SD.Role_User_Indi)) 
+                            { 
+                                <div class="widget-header mr-3">
+                                    <a asp-area="Customer" asp-controller="Order" asp-action="index" class="widget-view">
                                         <div class="icon-area">
                                             <i class="fa fa-store"></i>
                                         </div>
