@@ -74,12 +74,10 @@
 
                     <div class="card-footer">
                         <div class="card-footer row">
-                            @if (!Model.OrderHeader.ApplicationUser.EmailConfirmed
-                           && Model.OrderHeader.ApplicationUser.CompanyId != null
-                           && Model.OrderHeader.ApplicationUser.Company.IsAuthorizedCompany)
+                            @if (!Model.OrderHeader.ApplicationUser.EmailConfirmed)
                             {
                                 <div class="col-8 text-danger">
-                                    Email Phải được xác nhận cho khách hàng được ủy quyền!
+                                    Bạn chưa xác nhận Email!
                                 </div>
                                 <div class="col-4">
                                     <button type="submit" class="btn btn-outline-warning btn-sm">

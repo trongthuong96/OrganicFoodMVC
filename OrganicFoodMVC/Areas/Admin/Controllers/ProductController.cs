@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Authorization;
 using OrganicFoodMVC.Utility;
 using Microsoft.AspNetCore.Http;
 using OfficeOpenXml;
+using HtmlAgilityPack;
 
 namespace OrganicFoodMVC.Areas.Admin.Controllers
 {
@@ -158,36 +159,38 @@ namespace OrganicFoodMVC.Areas.Admin.Controllers
 
         public ActionResult ExportToExcel()
         {
-            var doctors = from m in _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit")
-                          select m;
+            var doctors = _unitOfWork.Product.GetAll(includeProperties: "Category,Brand,Unit");
 
             byte[] fileContents;
             ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
             ExcelPackage Ep = new ExcelPackage();
             ExcelWorksheet Sheet = Ep.Workbook.Worksheets.Add("DoctorsInfo");
-            Sheet.Cells["A1"].Value = "Mã Sản Phẩm";
-            Sheet.Cells["B1"].Value = "Tên Sản Phẩm";
-            Sheet.Cells["C1"].Value = "Mô tả ";
+            Sheet.Cells["B1"].Value = "Mã Sản Phẩm";
+            Sheet.Cells["C1"].Value = "Tên Sản Phẩm";
+            //Sheet.Cells["C1"].Value = "Mô tả ";
             Sheet.Cells["D1"].Value = "Số lượng";
             Sheet.Cells["E1"].Value = "Giá";
-            Sheet.Cells["F1"].Value = "ảnh";
-            Sheet.Cells["G1"].Value = "mã loại sản phẩm";
-            Sheet.Cells["H1"].Value = "thương hiệu";
-            Sheet.Cells["I1"].Value = "Mã đơn vị";
+            Sheet.Cells["F1"].Value = "Link ảnh";
+            Sheet.Cells["G1"].Value = "Loại sản phẩm";
+            Sheet.Cells["H1"].Value = "Thương hiệu";
+            Sheet.Cells["I1"].Value = "Đơn vị";
 
 
             int row = 2;
             foreach (var item in doctors)
             {
-                Sheet.Cells[string.Format("A{0}", row)].Value = item.Id;
-                Sheet.Cells[string.Format("B{0}", row)].Value = item.Name;
-                Sheet.Cells[string.Format("C{0}", row)].Value = item.Discription;
+                //var doc = new HtmlDocument();
+                //doc.LoadHtml(item.Discription);
+                //var innertext = doc.DocumentNode.InnerText; 
+                Sheet.Cells[string.Format("B{0}", row)].Value = item.Id;
+                Sheet.Cells[string.Format("C{0}", row)].Value = item.Name;
+                //Sheet.Cells[string.Format("C{0}", row)].Value = innertext;
                 Sheet.Cells[string.Format("D{0}", row)].Value = item.Quantity;
                 Sheet.Cells[string.Format("E{0}", row)].Value = item.Price;
                 Sheet.Cells[string.Format("F{0}", row)].Value = item.ImageUrl;
-                Sheet.Cells[string.Format("G{0}", row)].Value = item.CategoryId;
-                Sheet.Cells[string.Format("H{0}", row)].Value = item.Brand;
-                Sheet.Cells[string.Format("I{0}", row)].Value = item.UnitId;
+                Sheet.Cells[string.Format("G{0}", row)].Value = item.Category.Name;
+                Sheet.Cells[string.Format("H{0}", row)].Value = item.Brand.Name;
+                Sheet.Cells[string.Format("I{0}", row)].Value = item.Unit.Name;
 
                 row++;
             }
